@@ -3,22 +3,31 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [user, setUser] = useState({
     email: " ",
     password: " ",
   });
-  console.log("user", user);
-
-  const onLogin = () => {
-    console.log("user: " + user);
+  const [loading, setLoading] = useState(false);
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post("api/users/login", user);
+      console.log("response", response.data);
+      toast.success("Login successful");
+      // Redirect to the login page
+      router.push("/profile");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
-    <form
-      //   action="submit"
-      className="flex gap-8 flex-col h-screen w-full items-center justify-center"
-    >
+    <form className="flex gap-8 flex-col h-screen w-full items-center justify-center">
       <div className="font-bold text-lg">Login</div>
       <hr />
       <div className="flex flex-col">
@@ -44,7 +53,7 @@ export default function LoginPage() {
         />
       </div>
       <button className="w-40 h-12 rounded-md  bg-blue-400" onClick={onLogin}>
-        Login
+        {loading ? "Loading" : "Login"}
       </button>
       <Link href="/login" className="text-blue-700">
         Visit SignUp page

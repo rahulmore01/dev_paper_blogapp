@@ -1,21 +1,22 @@
 import mongoose from "mongoose";
 
-export default function dbConfig() {
+export async function connect() {
   try {
-    const MONGODB_URI = process.env.MONGO_URL;
-    mongoose.connect(MONGODB_URI!);
+    mongoose.connect(process.env.MONGO_URL!);
     const connection = mongoose.connection;
-    // to avaid long default error in the console
+
     connection.on("connected", () => {
-      console.log("Connected to MongoDB successfully");
+      console.log("MongoDB connected successfully");
     });
 
     connection.on("error", (err) => {
-      console.log("Error connecting to MongoDB" + err);
+      console.log(
+        "MongoDB connection error. Please make sure MongoDB is running. " + err
+      );
+      process.exit();
     });
-    process.exit();
   } catch (error) {
+    console.log("Something goes wrong!");
     console.log(error);
-    console.log("something went wrong");
   }
 }
