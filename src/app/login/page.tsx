@@ -1,30 +1,32 @@
 "use client";
-import axios from "axios";
 import Link from "next/link";
+import React from "react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [user, setUser] = useState({
-    email: " ",
-    password: " ",
+  const [user, setUser] = React.useState({
+    email: "",
+    password: "",
   });
-  const [loading, setLoading] = useState(false);
-  const onLogin = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post("api/users/login", user);
-      console.log("response", response.data);
-      toast.success("Login successful");
-      // Redirect to the login page
-      router.push("/profile");
-    } catch (error: any) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
+  const [loading, setLoading] = React.useState(false);
+
+  const onLogin = async (e: any) => {
+    // try {
+    e.preventDefault();
+    setLoading(true);
+    const response = await axios.post("/api/users/login", user);
+    console.log("Login success", response.data);
+    toast.success("Login success");
+    router.push("/profile");
+    // } catch (error: any) {
+    //   console.log("Login failed", error.message);
+    //   toast.error(error.message);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
   return (
     <form className="flex gap-8 flex-col h-screen w-full items-center justify-center">

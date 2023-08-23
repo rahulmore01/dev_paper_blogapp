@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-const Navbar = () => {
+
+const BlogNav = () => {
   return (
     <>
-      <div className=" flex h-20  bg-blue-600 w-full pl-20 pr-20 justify-between items-center fixed monu_ex_reg">
+      <div className="absolute flex bg-gray-300 h-10 w-full pl-20 pr-20 justify-between items-center monu_ex_reg">
         <Image
-          className="h-10 w-10"
-          src="/assets/Logo.png"
+          className="h-40 w-40"
+          src="/assets/blogLogo.svg"
           alt="me"
           width="64"
           height="64"
@@ -20,7 +21,6 @@ const Navbar = () => {
           <Link className="cursor-pointer" href="/blogs">
             Blogs
           </Link>
-          {/* <li className="cursor-pointer">Blogs</li> */}
         </ul>
         <Link className="cursor-pointer" href="/login">
           <button>Login</button>
@@ -30,4 +30,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default BlogNav;

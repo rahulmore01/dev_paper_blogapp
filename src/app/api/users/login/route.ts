@@ -32,20 +32,24 @@ export async function POST(request: NextRequest) {
       username: user.username,
       email: user.email,
     };
-
+    console.log("tokenData", tokenData);
     // creating a TOKEN using jwt and setting it as a response in browser cookie
+    // 1.creating a token in cookies
+
     const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
-      expiresIn: "1d",
+      // this is the expire time of tokenData, if token is experimentalOverrides, u cant use it
+      expiresIn: "30d",
     });
     const response = NextResponse.json({
       message: "Login successful",
       success: true,
     });
-    response.cookies.set("token", token, { httpOnly: true });
+    // 2set a cookie in the response
+    response.cookies.set("token", token, {
+      httpOnly: true,
+    });
+    console.log("token created");
     return response;
-
-    // return token to client
-    return NextResponse.json({ token }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

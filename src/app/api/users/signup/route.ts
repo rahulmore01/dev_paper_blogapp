@@ -4,11 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 
 // connection instanceof db Connection
-connect();
 
 export async function POST(request: NextRequest) {
+  await connect();
+  console.log(request);
+
   try {
-    // request is like req.body in express
+    // request is like req.body in express its coming from frontend,save that req object
     const reqBody = await request.json();
     const { username, email, password } = reqBody;
     console.log("reqBody", reqBody);
@@ -33,6 +35,7 @@ export async function POST(request: NextRequest) {
       password: hashedPassword,
     });
     const savedUser = await newUser.save();
+    // send saved user with response
     console.log("savedUser", savedUser);
     return NextResponse.json({
       message: "user created successfully",

@@ -3,35 +3,35 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, "Please enter a username"],
+    required: [true, "Please provide a username"],
     unique: true,
   },
   email: {
     type: String,
-    required: [true, "Please enter a email"],
+    required: [true, "Please provide a email"],
     unique: true,
   },
   password: {
     type: String,
-    required: [true, "Please enter a password"],
+    required: [true, "Please provide a password"],
   },
   //   user will be asked to click on a email link , then only varified
-  isVarified: {
+  isVerfied: {
     type: Boolean,
     default: false,
   },
   //   alternative option of using role,
-
-  isAdmin: {
-    type: Boolean,
-    default: false,
+  role: {
+    type: String,
+    required: true,
+    enum: ["admin", "user"],
   },
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,
-  varifyToken: String,
-  varifyTokenExpiry: Date,
+  verifyToken: String,
+  verifyTokenExpiry: Date,
 });
 
-const User = mongoose.models.users || mongoose.model("User", userSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;
