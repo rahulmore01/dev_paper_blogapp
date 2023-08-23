@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 const Navbar = () => {
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [prevScrollY, setPrevScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setShowNavbar(currentScrollY <= prevScrollY || currentScrollY < 20); // Show if scrolling up or near the top
+      setPrevScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollY]);
+
   return (
-    <>
-      <div className=" flex h-20  bg-blue-600 w-full pl-20 pr-20 justify-between items-center fixed monu_ex_reg">
+    <div
+      className={`fixed top-0 w-full bg-blue-600 transition-transform ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      } duration-300 ease-in-out`}
+    >
+      <div className="flex h-20 pl-20 pr-20 justify-between items-center monu_ex_reg">
         <Image
           className="h-10 w-10"
           src="/assets/Logo.png"
@@ -17,16 +36,15 @@ const Navbar = () => {
           <li className="cursor-pointer">About</li>
           <li className="cursor-pointer">Works</li>
           <li className="cursor-pointer">Resourses</li>
-          <Link className="cursor-pointer" href="/blogs">
-            Blogs
-          </Link>
-          {/* <li className="cursor-pointer">Blogs</li> */}
+          <li className="cursor-pointer">
+            <Link href="/blogs">Blogs</Link>
+          </li>
         </ul>
-        <Link className="cursor-pointer" href="/login">
+        <Link href="/login">
           <button>Login</button>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 

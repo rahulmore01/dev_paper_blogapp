@@ -1,25 +1,66 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import BlogCard from "@/components/blogCard/page";
+import { useRouter } from "next/navigation";
+import Navbar from "@/components/navbar/page";
 
-const Hero = () => {
+export default function Hero() {
+  const router = useRouter();
+  const [blogsData, setBlogsData] = useState([]);
+  console.log("blogsData=>", blogsData);
+
+  const fetchBlogsData = async () => {
+    try {
+      const response = await axios.get("/api/blogs/getallblogs");
+      setBlogsData(response.data);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
+
+  const handleCardClick = (blogId: string) => {
+    router.push(`/blogs/${blogId}`);
+  };
+
+  useEffect(() => {
+    fetchBlogsData();
+  }, []);
+
+  function trimToWords(text: any, numWords: any) {
+    const words = text.split(" ");
+    if (words.length > numWords) {
+      return words.slice(0, numWords).join(" ") + " ...";
+    }
+    return text;
+  }
   return (
     <>
-      <div className="bg-[#181818] text-white h-screen w-full">
-        <div className="hero  monu_ex_reg">
-          <div className="hero_text">
-            <div className="hero_text_title monu_ex_reg">I'm Rahul</div>
-            <div className="hero_text_subtitle  ">
-              I develop creative web applications
-            </div>
-          </div>
-          {/* cta */}
-          <div className="hero_cta">
-            <div className="hero_cta_main">Let's talk</div>
-            <div className="hero_cta_next">View work</div>
-          </div>
+      {/* <Navbar /> */}
+      <div className="container mx-auto mt-8 px-4">
+        <h1 className="text-3xl font-semibold mb-4">Blogs Page</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {blogsData.length === 0 ? (
+            <p>Loading blogs...</p>
+          ) : (
+            blogsData.map((post: any) => (
+              <div
+                key={post._id}
+                onClick={() => handleCardClick(post._id)}
+                className="cursor-pointer"
+              >
+                <BlogCard
+                  title={post.title}
+                  body={trimToWords(post.body, 20)}
+                  imageUrl={post.imageUrl}
+                  category={post.category}
+                  authorId={post.authorId}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </>
   );
-};
-
-export default Hero;
+}

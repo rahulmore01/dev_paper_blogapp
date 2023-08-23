@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BlogCard from "@/components/blogCard/page";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
-import BlogNav from "@/components/blognav/page";
 import Navbar from "@/components/navbar/page";
 
 export default function Page() {
@@ -30,19 +29,9 @@ export default function Page() {
     router.push(`/blogs/${blogId}`);
   };
 
-  // useEffect(() => {
-  //   console.log("blogsData =>", blogsData);
-
-  //   if (blogsData.length > 0) {
-  //     // For example, you can set the selectedBlogid to the first blog's ID
-  //     setSelectedBlogid(blogsData[0]._id);
-  //   }
-  // }, [blogsData]);
-
   return (
     <>
       <Navbar />
-      <BlogNav />
       <div className="flex gap-8 flex-col h-screen w-full items-center justify-center">
         <h1>blogs page</h1>
         <hr />
@@ -55,7 +44,7 @@ export default function Page() {
                   body={post.body}
                   imageUrl={post.imageUrl}
                   category={post.category}
-                  author={post.author}
+                  authorId={post.authorId}
                 />
                 {/* {console.log("post", post)} */}
               </div>
