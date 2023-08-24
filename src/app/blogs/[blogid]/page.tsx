@@ -6,6 +6,7 @@ import BlogPreview from "@/components/blogPreview/page";
 import Navbar from "@/components/navbar/page";
 
 interface Blog {
+  map(arg0: (post: any) => React.JSX.Element): React.ReactNode;
   _id: string;
   title: string;
   content: string;
@@ -19,7 +20,7 @@ interface SingleBlogPageProps {
 
 const SingleBlogPage: React.FC<SingleBlogPageProps> = ({ params }) => {
   const [blog, setBlog] = useState<Blog | null>(null);
-  console.log("blog", blog);
+  // console.log("blog", blog);
 
   const handleLike = () => {
     console.log("Like button clicked");
@@ -54,7 +55,7 @@ const SingleBlogPage: React.FC<SingleBlogPageProps> = ({ params }) => {
                 body={post.body}
                 imageUrl={post.imageUrl}
                 category={post.category}
-                author={post.author}
+                authorId={post.authorId}
               />
             </div>
           ))
