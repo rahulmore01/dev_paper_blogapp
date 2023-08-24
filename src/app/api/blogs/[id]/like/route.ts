@@ -11,10 +11,10 @@ export async function PUT(request: NextRequest, { params }: any) {
   const authorizationHeader: any = request.headers.get("authorization");
   const token: any = authorizationHeader.split(" ")[0]; // Use index 1 to get the token
 
-  const decodedToken = verifyJwtToken(token);
+  const decodedToken: any = verifyJwtToken(token);
   console.log("decodedToken", decodedToken);
 
-  const userId: any = decodedToken.id;
+  const userId: any = decodedToken?.id;
   console.log("userId", userId);
 
   if (!userId) {
@@ -30,7 +30,7 @@ export async function PUT(request: NextRequest, { params }: any) {
 
     if (blog.likes.includes(userId)) {
       blog.likes = blog.likes.filter(
-        (id) => id.toString() !== userId.toString()
+        (id: any) => id.toString() !== userId.toString()
       );
     } else {
       blog.likes.push(userId);
