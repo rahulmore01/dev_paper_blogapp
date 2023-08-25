@@ -19,6 +19,14 @@
   }
 }
 
+@font-face {
+  font-family: source;
+  src: url(/fonts/source-serif-pro-400-normal.otf);
+}
+
+.source {
+  font-family: source;
+}
 /* @font-face {
   font-family: monu_ex_reg;
   src: url(../../public/fonts/monument/MonumentExtended-Regular.otf);
