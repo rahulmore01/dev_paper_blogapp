@@ -43,11 +43,15 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({
       message: "Login successful",
       success: true,
+      token: token,
     });
     // 2set a cookie in the response
-    response.cookies.set("token", token, {
-      httpOnly: true,
-    });
+
+    // http only means client side cant access cookies
+    response.cookies.set("token", token);
+    // response.cookies.set("token", token, {
+    //   httpOnly: true,
+    // });
     console.log("token created");
     return response;
   } catch (error: any) {

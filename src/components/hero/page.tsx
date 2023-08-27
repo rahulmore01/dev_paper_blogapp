@@ -37,7 +37,7 @@ export default function Hero() {
   return (
     <>
       <div className="container mx-auto mt-40 px-4">
-        <div className="flex flex-col justify-center items-center gap-8">
+        <div className="flex flex-col justify-center items-center gap-8 mb-40">
           {blogsData.length === 0 ? (
             <p>Loading blogs...</p>
           ) : (

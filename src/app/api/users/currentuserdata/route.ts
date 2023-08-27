@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     // as we only have id from cookies, get that id and save
     const userId: any = await getDataFromToken(request);
+    console.log("userId: ", userId);
     // now search user in db with the same id
     const user = await User.findOne({
       _id: userId,

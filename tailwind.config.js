@@ -18,6 +18,10 @@ module.exports = {
     extend: {
       colors: {
         bgBlue: "#3E6FFF",
+        // card related
+        cTitle: "#364153",
+        cBody: "#677489",
+        cTag: "#F0F6FE",
       },
     },
   },

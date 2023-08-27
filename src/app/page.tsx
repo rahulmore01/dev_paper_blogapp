@@ -1,16 +1,23 @@
 "use client";
 import Hero from "@/components/hero/page";
 import Navbar from "@/components/navbar/page";
-import Image from "next/image";
-import { NextUIProvider } from "@nextui-org/react";
 
+// import { Provider } from "react-redux";
+// import { configureStore } from "@reduxjs/toolkit";
+// import userDataReducer from "@/redux/features/userSlice";
+
+// const store = configureStore({
+//   reducer: {
+//     user: userDataReducer,
+//   },
+// });
 export default function Home() {
   return (
     <>
-      <NextUIProvider>
-        <Navbar />
-        <Hero />
-      </NextUIProvider>
+      {/* // <Provider store={store}> */}
+      <Navbar />
+      <Hero />
     </>
+    // </Provider>
   );
 }

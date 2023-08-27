@@ -6,10 +6,11 @@ export function getDataFromToken(request: NextRequest) {
   try {
     // get token from cookies
     const token = request.cookies.get("token")?.value || " ";
-    console.log("token=>" + token);
+    console.log("token in getDataFromToken=>" + token);
 
     // token is encrypted , decode it and get data from it
     const decodeToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+    console.log("decodeToken=>" + decodeToken);
 
     // return only id from cookie token
     return decodeToken.id;

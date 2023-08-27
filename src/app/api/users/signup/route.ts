@@ -10,12 +10,10 @@ export async function POST(request: NextRequest) {
   console.log(request);
 
   try {
-    // request is like req.body in express its coming from frontend,save that req object
     const reqBody = await request.json();
     const { username, email, password } = reqBody;
     console.log("reqBody", reqBody);
 
-    // check if user already exist- awai because it return promise
     const user = await User.findOne({ email });
 
     if (user) {
@@ -24,25 +22,29 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    // if user not already registerd
+
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    // updating pass
-    const newUser = new User({
+    const userData = {
       username: username,
       email: email,
       password: hashedPassword,
-    });
-    const savedUser = await newUser.save();
-    // send saved user with response
-    console.log("savedUser", savedUser);
+      role: "admin",
+    };
+
+    const savedUser = await User.create(userData);
+
+    console.log("User created:", savedUser);
+
     return NextResponse.json({
       message: "user created successfully",
       success: true,
-      savedUser,
+      savedUser: savedUser,
     });
   } catch (error: any) {
+    console.error("Error creating user:", error);
+
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
